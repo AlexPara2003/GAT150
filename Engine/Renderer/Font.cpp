@@ -15,6 +15,17 @@ namespace neu{
 		}
 	}
 
+	SDL_Surface* Font::CreateSurface(const std::string& text, const Color& color){
+		
+		SDL_Color c = *((SDL_Color*)(&color));
+		SDL_Surface* surface = TTF_RenderText_Solid(m_ttfFont, text.c_str(), c);
+
+		if (surface == nullptr){
+			LOG(SDL_GetError());
+		}
+		return surface;
+	}
+
 	bool Font::Create(std::string filename, ...){
 		va_list args;
 		va_start(args, filename);

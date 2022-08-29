@@ -18,7 +18,10 @@ namespace neu{
 	public:
 		Scene() = default;
 		Scene(Game* game) : m_game{ game } {}
+		Scene(const Scene& other){}
 		~Scene() = default;
+
+		CLASS_DECLARATION(Scene)
 
 		void Initialize() override;
 		void Update() override;
@@ -28,6 +31,7 @@ namespace neu{
 		virtual bool Read(const rapidjson::Value& value) override;
 
 		void Add(std::unique_ptr<Actor> actor);
+		void RemoveAll();
 
 		template<typename T>
 		T* GetActor();

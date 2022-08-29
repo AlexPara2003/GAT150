@@ -9,13 +9,14 @@ namespace neu
 	class InputSystem
 	{
 	public:
-		enum State
+		enum class State
 		{
 			Idle,
 			Press,
 			Held,
 			Released
 		};
+		
 		
 		const uint32_t button_left = 0;
 		const uint32_t button_middle = 1;

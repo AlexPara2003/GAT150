@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "AlexGame.h"
 #include <iostream>
 
 int main(){
@@ -11,45 +12,47 @@ int main(){
 	neu::g_audioSystem.Initialize();
 	neu::g_resources.Initialize();
 	neu::g_physicsSystem.Initialize();
+	neu::g_eventManager.Initialize();
 
 	neu::Engine::Instance().Register();
 
 	neu::g_renderer.CreateWindow("Baked Beans", 800, 600);
 	neu::g_renderer.SetClearColor(neu::Color{ 10, 10, 10, 255 });
 
-	neu::Scene scene;
+	std::unique_ptr<AlexGame> game = std::make_unique<AlexGame>();
 	
-	rapidjson::Document document;
-	bool success = neu::json::Load("level.txt", document);
-
-	scene.Read(document);
-	scene.Initialize();
+	game->Initialize();
 
 	float angle = 0;
 
 	bool quit = false;
 	while (!quit){
-		//update (engine)
+		
 		neu::g_time.Tick();
 		neu::g_inputSystem.Update();
 		neu::g_audioSystem.Update();
 		neu::g_physicsSystem.Update();
+		neu::g_eventManager.Update();
 
 		if (neu::g_inputSystem.GetKeyDown(neu::key_escape)) quit = true;
 
-		//update game objects
-		scene.Update();
+		game->Update();
 
-		//render
 		neu::g_renderer.BeginFrame();
 
 		angle += 360.0f * neu::g_time.deltaTime;
 
-		scene.Draw(neu::g_renderer);
+		game->Draw(neu::g_renderer);
 
 		neu::g_renderer.EndFrame();
 	}
 
+	game->Shutdown();
+	game.reset();
+
+	neu::Factory::Instance().Shutdown();
+
+	neu::g_eventManager.Shutdown();
 	neu::g_physicsSystem.Shutdown();
 	neu::g_resources.Shutdown();
 	neu::g_inputSystem.Shutdown();

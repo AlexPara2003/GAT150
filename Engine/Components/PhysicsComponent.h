@@ -6,6 +6,9 @@ namespace neu{
 
 	class PhysicsComponent : public Component{
 	public:
+
+		CLASS_DECLARATION(PhysicsComponent)
+
 		PhysicsComponent() = default;
 		void Update() override;
 		virtual void ApplyForce(const Vector2& force) { acceleration += force; };

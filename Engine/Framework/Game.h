@@ -1,13 +1,11 @@
 #pragma once
 #include <memory>
 
-namespace neu
-{
+namespace neu{
 	class Renderer;
 	class Scene;
 
-	class Game
-	{
+	class Game{
 	public:
 		Game() = default;
 		virtual ~Game() = default;

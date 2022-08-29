@@ -3,6 +3,19 @@
 #include "Components/RenderComponent.h"
 
 namespace neu{
+	Actor::Actor(const Actor& other){
+		name = other.name;
+		tag = other.tag;
+		m_transform = other.m_transform;
+
+		m_scene = other.m_scene;
+
+		for (auto& component : other.m_components) {
+			
+			auto clone = std::unique_ptr<Component>((Component*)component->Clone().release());
+			AddComponent(std::move(clone));
+		}
+	}
 
 	void Actor::Initialize(){
 		for (auto& component : m_components) {
@@ -15,6 +28,9 @@ namespace neu{
 	}
 
 	void Actor::Update(){
+
+		if (!active) return;
+
 		for (auto& component : m_components){
 			component->Update();
 		}
@@ -28,6 +44,9 @@ namespace neu{
 	}
 
 	void Actor::Draw(Renderer& renderer){
+
+		if (!active) return;
+
 		for (auto& component : m_components)
 		{
 			auto renderComponent = dynamic_cast<RenderComponent*>(component.get());
@@ -59,10 +78,10 @@ namespace neu{
 		return true;
 	}
 
-	bool Actor::Read(const rapidjson::Value& value)
-	{
+	bool Actor::Read(const rapidjson::Value& value){
 		READ_DATA(value, tag);
 		READ_DATA(value, name);
+		READ_DATA(value, active);
 
 		m_transform.Read(value["transform"]);
 
