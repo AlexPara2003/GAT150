@@ -38,11 +38,8 @@ void AlexGame::Update(){
 	case gameState::titleScreen:
 		if (neu::g_inputSystem.GetKeyState(neu::key_space) == neu::InputSystem::State::Press){
 			m_scene->GetActorFromName("Title")->SetActive(false);
-
 			m_gameState = gameState::startLevel;
 		}
-
-
 		break;
 
 	case gameState::startLevel:
@@ -53,9 +50,6 @@ void AlexGame::Update(){
 			actor->Initialize();
 			m_scene->Add(std::move(actor));
 		}
-		m_gameState = gameState::game;
-
-		break;
 
 		for (int i = 0; i < 3; i++) {
 			auto actor = neu::Factory::Instance().Create<neu::Actor>("Ghost");
@@ -64,7 +58,9 @@ void AlexGame::Update(){
 			m_scene->Add(std::move(actor));
 		}
 		m_gameState = gameState::game;
+		break;
 
+	case gameState::game:
 		break;
 
 	case gameState::playerDead:
@@ -74,9 +70,9 @@ void AlexGame::Update(){
 		}
 		break;
 
-		m_scene->Update();
+		
 	}
-
+	m_scene->Update();
 }
 
 void AlexGame::Draw(neu::Renderer& renderer){

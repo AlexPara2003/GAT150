@@ -2,13 +2,13 @@
 #include "Engine.h"
 #include <iostream>
 
-void EnemyComponent::Initialize(){
-
+void EnemyComponent::Initialize()
+{
     CharacterComponent::Initialize();
 }
 
-void EnemyComponent::Update(){
-
+void EnemyComponent::Update()
+{
     auto actor = m_owner->GetScene()->GetActorFromName("Player");
     if (actor)
     {
@@ -20,40 +20,42 @@ void EnemyComponent::Update(){
     }
 }
 
-void EnemyComponent::OnCollisionEnter(neu::Actor* other){
-
-    if (other->GetTag() == "Player"){
-
+void EnemyComponent::OnCollisionEnter(neu::Actor* other)
+{
+    if (other->GetTag() == "Player")
+    {
         neu::Event event;
         event.name = "EVENT_DAMAGE";
         event.data = damage;
         event.receiver = other;
-
         neu::g_eventManager.Notify(event);
     }
 }
 
-void EnemyComponent::OnCollisionExit(neu::Actor* other){
-
+void EnemyComponent::OnCollisionExit(neu::Actor* other)
+{
 }
 
-void EnemyComponent::OnNotify(const neu::Event& event){
-
-    if (event.name == "EVENT_DAMAGE"){
+void EnemyComponent::OnNotify(const neu::Event& event)
+{
+    if (event.name == "EVENT_DAMAGE")
+    {
         health -= std::get<float>(event.data);
-        if (health <= 0){
+        if (health <= 0)
+        {
             m_owner->SetDestroy();
         }
     }
+
 }
 
-bool EnemyComponent::Write(const rapidjson::Value& value) const{
-
+bool EnemyComponent::Write(const rapidjson::Value& value) const
+{
     return true;
 }
 
-bool EnemyComponent::Read(const rapidjson::Value& value){
-
+bool EnemyComponent::Read(const rapidjson::Value& value)
+{
     CharacterComponent::Read(value);
 
     return true;

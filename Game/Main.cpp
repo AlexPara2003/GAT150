@@ -16,7 +16,7 @@ int main(){
 
 	neu::Engine::Instance().Register();
 
-	neu::g_renderer.CreateWindow("Baked Beans", 800, 600);
+	neu::g_renderer.CreateWindow("Dungeons fo snoegund", 800, 600);
 	neu::g_renderer.SetClearColor(neu::Color{ 10, 10, 10, 255 });
 
 	std::unique_ptr<AlexGame> game = std::make_unique<AlexGame>();

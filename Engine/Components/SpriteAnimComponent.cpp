@@ -16,23 +16,11 @@ namespace neu {
                 frame = start_frame;
             }
         }
-
-        //Calculate source rect
-        Vector2 cellSize = m_texture->GetSize() / Vector2{ num_columns, num_rows };
-
-        int column = (frame - 1) % num_columns;
-        int row = (frame - 1) / num_columns;
-
-        source.x = (int)(column * cellSize.x);
-        source.y = (int)(row * cellSize.y);
-        source.w = (int)(cellSize.x);
-        source.h = (int)(cellSize.y);
-
     }
 
     void SpriteAnimComponent::Draw(Renderer& renderer){
 
-        renderer.Draw(m_texture, source, m_owner->m_transform, registration, flipHorizontal);
+        renderer.Draw(m_texture, GetSource(), m_owner->m_transform, registration, flipHorizontal);
 
     }
 

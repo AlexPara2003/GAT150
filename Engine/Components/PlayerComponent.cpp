@@ -103,13 +103,8 @@ void neu::PlayerComponent::OnCollisionEnter(Actor* other){
 		other->SetDestroy();
 
 	}
-
-	std::cout << "Player Enter\n";
-
 }
 
 void neu::PlayerComponent::OnCollisionExit(Actor* other){
-
-	std::cout << "Player Exit\n";
 
 }
