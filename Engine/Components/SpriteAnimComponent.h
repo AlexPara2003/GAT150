@@ -4,7 +4,6 @@
 
 namespace neu {
 	class Texture;
-
 	class SpriteAnimComponent : public RenderComponent {
 
 	public:
@@ -17,6 +16,8 @@ namespace neu {
 		virtual bool Write(const rapidjson::Value& value) const override;
 		virtual bool Read(const rapidjson::Value& value) override;
 
+		Rect& GetSource() override;
+
 		float fps = 0;
 		int num_columns = 0;
 		int num_rows = 0;
@@ -28,6 +29,7 @@ namespace neu {
 		float frameTimer = 0;
 
 		Rect source;
+
 		std::shared_ptr<Texture> m_texture;
 
 	};

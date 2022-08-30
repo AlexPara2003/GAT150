@@ -100,7 +100,7 @@
       },
       {
          "type":"Actor",
-         "name":"title",
+         "name":"Text",
          "transform":{
             "position":[
                40,
@@ -115,7 +115,7 @@
          "components":[
             {
                "type":"TextComponent",
-               "title":"Dungeon of Noegnud",
+               "text":"Dungeon of Noegnud",
                "font_name":"fonts/WedgieRegular.ttf",
                "font_size":16,
                "registration":[

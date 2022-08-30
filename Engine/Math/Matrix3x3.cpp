@@ -1,7 +1,7 @@
 #include "Matrix3x3.h"
 
-namespace neu
-{
+namespace neu{
+
 	// 1 0 0
 	// 0 1 0
 	// 0 0 1

@@ -3,7 +3,7 @@
 #include "Framework/Game.h"
 #include "Framework/Event.h"
 
-class AlexGame : public neu::Game {
+class AlexGame : public neu::Game, public neu::INotify{
 
 public:
 	enum class gameState {
@@ -28,5 +28,10 @@ public:
 	gameState m_gameState = gameState::titleScreen;
 	float m_startTimer = 0;
 	int m_lives = 3;
+
+
+	// Inherited via INotify
+	virtual void OnNotify(const neu::Event& event) override;
+
 
 };

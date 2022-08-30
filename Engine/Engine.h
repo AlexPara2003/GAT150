@@ -25,6 +25,7 @@
 #include "Components/SpriteAnimComponent.h"
 #include "Components/TextComponent.h"
 #include "Components/TilemapComponents.h"
+#include "Components/CharacterComponent.h"
 
 #include "Input/InputSystem.h"
 

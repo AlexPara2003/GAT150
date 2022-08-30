@@ -2,10 +2,8 @@
 #include "Vector2.h"
 #include "Vector3.h"
 
-namespace neu
-{
-	struct Matrix3x3
-	{
+namespace neu{
+	struct Matrix3x3{
 		Vector3 rows[3]; //[3][3] (Rows / Columns)
 
 		Matrix3x3() = default;
@@ -25,16 +23,19 @@ namespace neu
 
 		static const Matrix3x3 identity;
 		static const Matrix3x3 zero;
+
+		Vector2 GetTranslation() const;
+		float GetRotation() const;
+		Vector2 GetScale() const;
 	};
 
-	inline Matrix3x3::Matrix3x3(const Vector3& row1, const Vector3& row2, const Vector3& row3)
-	{
+	inline Matrix3x3::Matrix3x3(const Vector3& row1, const Vector3& row2, const Vector3& row3){
 		rows[0] = row1;
 		rows[1] = row2;
 		rows[2] = row3;
 	}
-	inline Vector2 Matrix3x3::operator*(const Vector2& v) const
-	{
+
+	inline Vector2 Matrix3x3::operator*(const Vector2& v) const{
 		Vector2 result;
 
 		result.x = v.x * rows[0][0] + v.y * rows[0][1] + 1.0f * rows[0][2];
@@ -42,6 +43,7 @@ namespace neu
 
 		return result;
 	}
+
 	inline Matrix3x3 Matrix3x3::operator*(const Matrix3x3& mx) const
 	{
 		Matrix3x3 result;
@@ -62,8 +64,8 @@ namespace neu
 
 		return result;
 	}
-	inline Matrix3x3 Matrix3x3::CreateScale(const Vector2& scale) 
-	{
+
+	inline Matrix3x3 Matrix3x3::CreateScale(const Vector2& scale) {
 		Matrix3x3 mx = identity;
 
 		//non-uniform
@@ -76,8 +78,8 @@ namespace neu
 
 		return mx;
 	}
-	inline Matrix3x3 Matrix3x3::CreateScale(float scale)
-	{
+
+	inline Matrix3x3 Matrix3x3::CreateScale(float scale){
 		Matrix3x3 mx = identity;
 
 		//uniform
@@ -106,12 +108,27 @@ namespace neu
 	{
 		Matrix3x3 mx = identity;
 
-		// 1 0 x
-		// 0 1 y
-		// 0 0 1
 		mx[0][2] = translate.x;
 		mx[1][2] = translate.y;
 
 		return mx;
+	}
+
+	inline Vector2 Matrix3x3::GetTranslation() const {
+
+		return {rows[0][2], rows[1][2]};
+	}
+
+	inline float Matrix3x3::GetRotation() const {
+
+		return std::atan2(rows[1][0], rows[0][0]);
+	}
+
+	inline Vector2 Matrix3x3::GetScale() const {
+
+		Vector2 x = { rows[0][0], rows[0][1] };
+		Vector2 y = { rows[1][0], rows[1][1] };
+
+		return Vector2();
 	}
 }
