@@ -54,6 +54,8 @@ namespace neu{
 
 		Transform m_transform;
 
+		float lifespan = 0;
+
 	protected:
 		std::string name;
 		std::string tag;

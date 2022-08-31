@@ -1,6 +1,7 @@
 #pragma once
 #include "../Math/Vector2.h"
 #include "../Math/Color.h"
+#include "Math/Matrix3x3.h"
 #include "Texture.h"
 
 struct SDL_Renderer;
@@ -14,12 +15,18 @@ namespace neu{
 		Renderer() = default;
 		~Renderer() = default;
 
+		Matrix3x3 m_view;
+		Matrix3x3 m_viewport;
+
 		void Initialize();
 		void Shutdown();
 		void CreateWindow(const char* name, int width, int height);	
 		void BeginFrame();
 		void EndFrame();
 		void SetClearColor(const Color& color) { m_clearColor = color; }
+
+		void SetViewMatrix(const Matrix3x3& view) { m_view = view; }
+		void SetViewportMatrix(const Matrix3x3& viewport) { m_viewport = viewport; }
 
 		void DrawLine(float x1, float y1, float x2, float y2);
 		void DrawLine(const Vector2& v1, const Vector2& v2, const Color& color);

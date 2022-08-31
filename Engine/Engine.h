@@ -26,6 +26,7 @@
 #include "Components/TextComponent.h"
 #include "Components/TilemapComponents.h"
 #include "Components/CharacterComponent.h"
+#include "Components/CameraComponent.h"
 
 #include "Input/InputSystem.h"
 

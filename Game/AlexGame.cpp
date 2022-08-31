@@ -61,6 +61,11 @@ void AlexGame::Update(){
 		break;
 
 	case gameState::game:
+	{
+		//auto actor = m_scene->GetActorFromName("Score");
+		//auto component = actor->GetComponent<neu::TextComponent>();
+		//component->SetText(std::to_string((int)m_score));
+	}
 		break;
 
 	case gameState::playerDead:

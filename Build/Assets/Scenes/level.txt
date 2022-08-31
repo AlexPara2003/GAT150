@@ -149,7 +149,8 @@
             "components":[
                 {
                     "type":"PlayerComponent",
-                    "speed":2000
+                    "speed":1500,
+                    "jump":10000
                 },
                 {
                     "type":"RBPhysicsComponent",
@@ -162,12 +163,18 @@
                 },
                 {
                     "type":"SpriteAnimComponent",
-                    "texture_name":"Textures/demon-attack.png",
-                    "fps":12,
-                    "num_columns":11,
-                    "num_rows":1,
-                    "start_frame":1,
-                    "end_frame":11
+                    "default_sequence":"idle",
+                    "sequences":[
+                        {
+                            "sequence.name":"idle",
+                            "sequence.fps":12,
+                            "sequence.num_columns":8,
+                            "sequence.num_rows":1,
+                            "sequence.start_frame":1,
+                            "sequence.end_frame":8,
+                            "texture_name":"Textures/demon-idle.png"
+                        }
+                    ]
                 }
             ]
         },
@@ -197,15 +204,30 @@
                 {
                     "type":"CollisionComponent",
                     "data.restitution":0.7
-                },
+                }
+            ]
+        },
+        {
+            "type":"Actor",
+            "name":"Camera",
+            "transform":{
+                "position":[
+                    400,
+                    300
+                ],
+                "scale":[
+                    1,
+                    1
+                ],
+                "rotation":0
+            },
+            "components":[
                 {
-                    "type":"SpriteAnimComponent",
-                    "texture_name":"Textures/Coins.png",
-                    "fps":12,
-                    "num_columns":8,
-                    "num_rows":1,
-                    "start_frame":1,
-                    "end_frame":8
+                    "type":"CameraComponent",
+                    "viewport_size":[
+                        800,
+                        600
+                    ]
                 }
             ]
         }

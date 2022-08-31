@@ -4,13 +4,10 @@
 #include <vector>
 #include <array>
 
-namespace neu
-{
-	class InputSystem
-	{
+namespace neu{
+	class InputSystem{
 	public:
-		enum class State
-		{
+		enum class State{
 			Idle,
 			Press,
 			Held,
