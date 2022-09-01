@@ -18,12 +18,10 @@ void AlexGame::Initialize(){
 		}
 		m_scene->Read(document);
 	}
-
 	m_scene->Initialize();
 
 	neu::g_eventManager.Subscribe("EVENT_ADD_POINTS", std::bind(&AlexGame::OnNotify, this, std::placeholders::_1));
 	neu::g_eventManager.Subscribe("EVENT_PLAYER_DEAD", std::bind(&AlexGame::OnNotify, this, std::placeholders::_1));
-
 }
 
 void AlexGame::Shutdown(){

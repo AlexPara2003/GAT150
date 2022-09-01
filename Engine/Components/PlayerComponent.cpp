@@ -61,7 +61,6 @@ void neu::PlayerComponent::Update(){
 	if (camera){
 		camera->m_transform.position = neu::Lerp(camera -> m_transform.position, m_owner->m_transform.position, 2 * g_time.deltaTime);
 	}
-
 }
 
 bool neu::PlayerComponent::Write(const rapidjson::Value& value) const{

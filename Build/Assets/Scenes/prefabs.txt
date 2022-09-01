@@ -91,10 +91,10 @@
                         {
                             "sequence.name":"idle",
                             "sequence.fps":12,
-                            "sequence.num_columns":4,
+                            "sequence.num_columns":7,
                             "sequence.num_rows":1,
                             "sequence.start_frame":1,
-                            "sequence.end_frame":4,
+                            "sequence.end_frame":7,
                             "texture_name":"Textures/ghost-idle.png"
                         }
                     ]

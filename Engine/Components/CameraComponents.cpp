@@ -18,7 +18,10 @@ namespace neu{
     }
 
     void CameraComponent::SetViewport(const Vector2& size){
+        Matrix3x3 mxTranslation = Matrix3x3::CreateTranslation(size * 0.5f);
 
+        m_viewport = mxTranslation;
+        g_renderer.SetViewportMatrix(m_viewport);
     }
 
     bool CameraComponent::Write(const rapidjson::Value& value) const{
