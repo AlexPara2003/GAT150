@@ -85,13 +85,17 @@ void AlexGame::Update() {
 	{
 		
 		m_scene->GetActorFromName("End")->SetActive(true);
-
-
+		m_startExit -= neu::g_time.deltaTime;
+		if (m_startExit <= 0){
+			gameState::titleScreen;
+		}
+		break;
 	}
 
-	break;
-
 	case gameState::playerDead:
+		
+
+
 		m_startTimer -= neu::g_time.deltaTime;
 		if (m_startTimer <= 0) {
 			m_gameState = (m_lives > 0) ? gameState::startLevel : gameState::gameOver;

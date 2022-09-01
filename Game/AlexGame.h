@@ -27,6 +27,7 @@ public:
 	gameState m_gameState = gameState::titleScreen;
 
 	float m_startTimer = 0;
+	float m_startExit = 0;
 	int m_coinSpawnTimer = 1;
 	int m_enemySpawnTimer = 1;
 	int m_lives = 3;
