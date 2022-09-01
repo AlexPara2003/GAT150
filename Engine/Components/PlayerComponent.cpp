@@ -6,7 +6,6 @@ void neu::PlayerComponent::Initialize(){
 	
 	CharacterComponent::Initialize();
 
-	
 }
 
 void neu::PlayerComponent::Update(){
@@ -99,6 +98,8 @@ void neu::PlayerComponent::OnCollisionEnter(Actor* other){
 		Event event;
 		event.name = "EVENT_ADD_POINTS";
 		event.data = 1;
+
+		health += 1;
 
 		g_eventManager.Notify(event);
 

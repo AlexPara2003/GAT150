@@ -16,6 +16,7 @@ namespace neu{
 		virtual bool Read(const rapidjson::Value& value) override;
 
 	public:
+		
 		float health = 3;
 		float damage = 10;
 		float speed = 0;

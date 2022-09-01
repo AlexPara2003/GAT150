@@ -20,7 +20,7 @@ namespace neu{
 		virtual bool Write(const rapidjson::Value& value) const override;
 		virtual bool Read(const rapidjson::Value& value) override;
 
-		float jump = 100000;
+		float jump = 1000;
 		int m_groundCount = 0;
 	};
 }

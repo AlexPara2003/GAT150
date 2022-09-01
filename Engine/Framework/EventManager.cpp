@@ -22,8 +22,16 @@ namespace neu {
 		m_events[name].push_back(observer);
 	}
 
-	void EventManager::Unsubscribe(const std::string& name, GameObject* receiver){
+	void neu::EventManager::Unsubscribe(const std::string& name, GameObject* receiver){
+		auto& observers = m_events[name];
 
+		// remove observer with matching receiver from observers
+		for (auto iter = observers.begin(); iter != observers.end(); iter++){
+			if (iter->receiver == receiver){
+				observers.erase(iter);
+				break;
+			}
+		}
 	}
 
 	void EventManager::Notify(const Event& event){

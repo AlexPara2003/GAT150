@@ -13,7 +13,7 @@ namespace neu
 	}
 
 	void AudioSystem::Shutdown(){
-		// !! use range based for-loop to iterate through m_sounds, call release on each element 
+		
 		for (auto sound : m_sounds){
 			sound.second->release();
 		}

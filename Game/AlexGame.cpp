@@ -36,11 +36,21 @@ void AlexGame::Update(){
 	case gameState::titleScreen:
 		if (neu::g_inputSystem.GetKeyState(neu::key_space) == neu::InputSystem::State::Press){
 			m_scene->GetActorFromName("Title")->SetActive(false);
+			m_scene->GetActorFromName("Instruction")->SetActive(false);
+			m_scene->GetActorFromName("Begin")->SetActive(false);
 			m_gameState = gameState::startLevel;
 		}
+
 		break;
 
 	case gameState::startLevel:
+
+		{
+			auto actor = neu::Factory::Instance().Create<neu::Actor>("Player");
+			actor->m_transform.position = { 400,200 };
+			actor->Initialize();
+			m_scene->Add(std::move(actor));
+		}
 
 		for (int i = 0; i < 10; i++) {
 			auto actor = neu::Factory::Instance().Create<neu::Actor>("Coin");
@@ -55,14 +65,22 @@ void AlexGame::Update(){
 			actor->Initialize();
 			m_scene->Add(std::move(actor));
 		}
+
+
 		m_gameState = gameState::game;
 		break;
 
 	case gameState::game:
 	{
-		//auto actor = m_scene->GetActorFromName("Score");
-		//auto component = actor->GetComponent<neu::TextComponent>();
-		//component->SetText(std::to_string((int)m_score));
+		auto actor = m_scene->GetActorFromName("Score");
+		auto component = actor->GetComponent<neu::TextComponent>();
+		component->SetText(std::to_string((int)m_score));
+	}
+
+	{
+		auto actor = m_scene->GetActorFromName("Score");
+		auto component = actor->GetComponent<neu::TextComponent>();
+		component->SetText(std::to_string((int)m_score));
 	}
 		break;
 
@@ -72,8 +90,6 @@ void AlexGame::Update(){
 			m_gameState = (m_lives > 0) ? gameState::startLevel : gameState::gameOver;
 		}
 		break;
-
-		
 	}
 	m_scene->Update();
 }
@@ -103,7 +119,7 @@ void AlexGame::OnPlayerDead(const neu::Event& event){
 
 void AlexGame::OnNotify(const neu::Event& event){
 
-	if (event.name == "EVENT_ADD_POINTS") {
+	if (event.name == "EVENT_ENEMY_DEFEAT") {
 		AddPoints(std::get<int>(event.data));
 	}
 

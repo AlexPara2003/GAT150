@@ -7,10 +7,9 @@ namespace neu{
 	}
 
 	void CharacterComponent::Initialize(){
-		// bind events
+		
 		g_eventManager.Subscribe("EVENT_DAMAGE", std::bind(&CharacterComponent::OnNotify, this, std::placeholders::_1), m_owner);
 
-		// bind collision events
 		auto component = m_owner->GetComponent<CollisionComponent>();
 		if (component)
 		{

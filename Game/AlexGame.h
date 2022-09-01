@@ -14,7 +14,6 @@ public:
 		playerDead, 
 		gameOver
 
-
 	};
 
 	virtual void Initialize() override;
@@ -26,12 +25,10 @@ public:
 	void OnPlayerDead(const neu::Event& event);
 
 	gameState m_gameState = gameState::titleScreen;
+
 	float m_startTimer = 0;
-	int m_lives = 3;
+	int m_lives = 1;
 
-
-	// Inherited via INotify
 	virtual void OnNotify(const neu::Event& event) override;
-
 
 };

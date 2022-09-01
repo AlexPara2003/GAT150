@@ -9,8 +9,8 @@
                     300
                 ],
                 "scale":[
-                    1,
-                    1
+                    3,
+                    3
                 ],
                 "rotation":0
             },
@@ -51,50 +51,13 @@
         },
         {
             "type":"Actor",
-            "name":"Background",
-            "transform":{
-                "position":[
-                    400,
-                    300
-                ],
-                "scale":[
-                    1,
-                    1
-                ],
-                "rotation":0
-            },
+            "name":"Music",
             "components":[
                 {
-                    "type":"SpriteComponent",
-                    "texture_name":"Textures/background.png"
-                }
-            ]
-        },
-        {
-            "type":"Actor",
-            "name":"Floor",
-            "transform":{
-                "position":[
-                    400,
-                    520
-                ],
-                "scale":[
-                    1,
-                    1
-                ],
-                "rotation":0
-            },
-            "components":[
-                {
-                    "type":"RBPhysicsComponent",
-                    "data.is_dynamic":false
-                },
-                {
-                    "type":"CollisionComponent",
-                    "data.size":[
-                        800,
-                        24
-                    ]
+                    "type":"AudioComponent",
+                    "sound_name":"audio/DarkHollows.mp3",
+                    "play_on_start":true,
+                    "loop":true
                 }
             ]
         },
@@ -123,7 +86,7 @@
                         0.5
                     ],
                     "color":[
-                        255,
+                        0,
                         255,
                         0,
                         255
@@ -133,12 +96,11 @@
         },
         {
             "type":"Actor",
-            "name":"Player",
-            "tag":"Player",
+            "name":"Instruction",
             "transform":{
                 "position":[
-                    400,
-                    200
+                    40,
+                    50
                 ],
                 "scale":[
                     1,
@@ -148,45 +110,30 @@
             },
             "components":[
                 {
-                    "type":"PlayerComponent",
-                    "speed":500,
-                    "jump":10000
-                },
-                {
-                    "type":"RBPhysicsComponent",
-                    "damping":0.99,
-                    "data.gravity_scale":1,
-                    "data.constrain_angle":true
-                },
-                {
-                    "type":"CollisionComponent"
-                },
-                {
-                    "type":"SpriteAnimComponent",
-                    "default_sequence":"idle",
-                    "sequences":[
-                        {
-                            "sequence.name":"idle",
-                            "sequence.fps":12,
-                            "sequence.num_columns":6,
-                            "sequence.num_rows":1,
-                            "sequence.start_frame":1,
-                            "sequence.end_frame":6,
-                            "texture_name":"Textures/demon-idle.png"
-                        }
+                    "type":"TextComponent",
+                    "text":"collect coins to gain health",
+                    "font_name":"fonts/WedgieRegular.ttf",
+                    "font_size":16,
+                    "registration":[
+                        0.0,
+                        0.5
+                    ],
+                    "color":[
+                        0,
+                        255,
+                        0,
+                        255
                     ]
                 }
             ]
         },
         {
             "type":"Actor",
-            "name":"Coin",
-            "tag":"Pickup",
-            "prefab":true,
+            "name":"Begin",
             "transform":{
                 "position":[
-                    600,
-                    200
+                    40,
+                    70
                 ],
                 "scale":[
                     1,
@@ -196,28 +143,52 @@
             },
             "components":[
                 {
-                    "type":"RBPhysicsComponent",
-                    "damping":0.4,
-                    "data.gravity_scale":1,
-                    "data.constrain_angle":false
-                },
+                    "type":"TextComponent",
+                    "text":"Press space to begin game",
+                    "font_name":"fonts/WedgieRegular.ttf",
+                    "font_size":16,
+                    "registration":[
+                        0.0,
+                        0.5
+                    ],
+                    "color":[
+                        0,
+                        255,
+                        0,
+                        255
+                    ]
+                }
+            ]
+        },
+        {
+            "type":"Actor",
+            "name":"Score",
+            "transform":{
+                "position":[
+                    40,
+                    30
+                ],
+                "scale":[
+                    1,
+                    1
+                ],
+                "rotation":0
+            },
+            "components":[
                 {
-                    "type":"CollisionComponent",
-                    "data.restitution":0.7
-                },
-                {
-                    "type":"SpriteAnimComponent",
-                    "default_sequence":"idle",
-                    "sequences":[
-                        {
-                            "sequence.name":"idle",
-                            "sequence.fps":12,
-                            "sequence.num_columns":8,
-                            "sequence.num_rows":1,
-                            "sequence.start_frame":1,
-                            "sequence.end_frame":8,
-                            "texture_name":"Textures/coins.png"
-                        }
+                    "type":"TextComponent",
+                    "text":"Score: ",
+                    "font_name":"fonts/WedgieRegular.ttf",
+                    "font_size":16,
+                    "registration":[
+                        0.0,
+                        0.5
+                    ],
+                    "color":[
+                        0,
+                        255,
+                        0,
+                        255
                     ]
                 }
             ]

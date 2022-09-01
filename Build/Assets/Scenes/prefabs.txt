@@ -1,5 +1,53 @@
 {
     "actors":[
+    {
+            "type":"Actor",
+            "name":"Player",
+            "tag":"Player",
+            "prefab":true,
+            "transform":{
+                "position":[
+                    400,
+                    200
+                ],
+                "scale":[
+                    0.4,
+                    0.4
+                ],
+                "rotation":0
+            },
+            "components":[
+                {
+                    "type":"PlayerComponent",
+                    "speed":250,
+                    "jump":1000
+                },
+                {
+                    "type":"RBPhysicsComponent",
+                    "damping":0.99,
+                    "data.gravity_scale":1,
+                    "data.constrain_angle":true
+                },
+                {
+                    "type":"CollisionComponent"
+                },
+                {
+                    "type":"SpriteAnimComponent",
+                    "default_sequence":"idle",
+                    "sequences":[
+                        {
+                            "sequence.name":"idle",
+                            "sequence.fps":12,
+                            "sequence.num_columns":6,
+                            "sequence.num_rows":1,
+                            "sequence.start_frame":1,
+                            "sequence.end_frame":6,
+                            "texture_name":"Textures/demon-idle.png"
+                        }
+                    ]
+                }
+            ]
+        },
         {
             "type":"Actor",
             "name":"Coin",
@@ -56,7 +104,7 @@
             "components":[
                 {
                     "type":"EnemyComponent",
-                    "speed":0.1,
+                    "speed":1,
                     "health":1,
                     "damage":1
                 },

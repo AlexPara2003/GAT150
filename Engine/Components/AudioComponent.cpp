@@ -3,14 +3,12 @@
 
 namespace neu{
 	AudioComponent::~AudioComponent(){
-		Stop();
-		// !! call Stop() to stop the audio channel when destroyed 
-	}
+			Stop();
+		}
 
 	void AudioComponent::Initialize(){
 		if (play_on_start){
-			Play();
-			// !! call Play() to start the audio if playing on awake (start) 
+			Play();		 
 		}
 	}
 
@@ -20,7 +18,7 @@ namespace neu{
 
 	void AudioComponent::Play(){
 		m_channel.Stop();
-		// !! call Stop() to stop the current audio channel 
+		
 		m_channel = g_audioSystem.PlayAudio(sound_name, volume, pitch, loop);
 	}
 
@@ -35,7 +33,6 @@ namespace neu{
 
 	bool AudioComponent::Read(const rapidjson::Value& value){
 
-		// !! READ_DATA on sound_name, volume, ... 
 
 		READ_DATA(value, sound_name);
 		READ_DATA(value, volume);

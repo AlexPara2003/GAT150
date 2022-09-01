@@ -27,8 +27,6 @@ namespace neu{
 		if (IsPlaying()) {
 			m_channel->getPitch(&pitch);
 		}
-			// !! call getPitch (pass pointer to pitch &) 
-
 			return pitch;
 	}
 
