@@ -97,7 +97,7 @@ void neu::PlayerComponent::OnCollisionEnter(Actor* other){
 
 		Event event;
 		event.name = "EVENT_ADD_POINTS";
-		event.data = 1;
+		event.data = 100;
 
 		health += 1;
 

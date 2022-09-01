@@ -3,15 +3,15 @@
 #include "Framework/Game.h"
 #include "Framework/Event.h"
 
-class AlexGame : public neu::Game, public neu::INotify{
+class AlexGame : public neu::Game, public neu::INotify {
 
 public:
 	enum class gameState {
 
 		titleScreen,
 		startLevel,
-		game, 
-		playerDead, 
+		game,
+		playerDead,
 		gameOver
 
 	};
@@ -27,7 +27,10 @@ public:
 	gameState m_gameState = gameState::titleScreen;
 
 	float m_startTimer = 0;
-	int m_lives = 1;
+	int m_coinSpawnTimer = 1;
+	int m_enemySpawnTimer = 1;
+	int m_lives = 3;
+	int m_health = 3;
 
 	virtual void OnNotify(const neu::Event& event) override;
 

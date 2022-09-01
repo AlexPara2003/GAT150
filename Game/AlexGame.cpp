@@ -2,14 +2,14 @@
 #include "GameComponents/EnemyComponent.h"
 #include "Engine.h"
 
-void AlexGame::Initialize(){
+void AlexGame::Initialize() {
 
 	REGISTER_CLASS(EnemyComponent);
 
 	m_scene = std::make_unique<neu::Scene>();
 	rapidjson::Document document;
 
-	std::vector<std::string> sceneNames = {"scenes/prefabs.txt", "scenes/tilemap.txt", "scenes/level.txt"};
+	std::vector<std::string> sceneNames = { "scenes/prefabs.txt", "scenes/tilemap.txt", "scenes/level.txt" };
 	for (auto sceneName : sceneNames) {
 		bool success = neu::json::Load(sceneName, document);
 		if (!success) {
@@ -24,17 +24,19 @@ void AlexGame::Initialize(){
 	neu::g_eventManager.Subscribe("EVENT_PLAYER_DEAD", std::bind(&AlexGame::OnNotify, this, std::placeholders::_1));
 }
 
-void AlexGame::Shutdown(){
+void AlexGame::Shutdown() {
 
 	m_scene->RemoveAll();
 
 }
 
-void AlexGame::Update(){
+void AlexGame::Update() {
 
-	switch (m_gameState) {
+	switch (m_gameState){
 	case gameState::titleScreen:
-		if (neu::g_inputSystem.GetKeyState(neu::key_space) == neu::InputSystem::State::Press){
+		m_scene->GetActorFromName("End")->SetActive(false);
+		m_scene->GetActorFromName("Score")->SetActive(false);
+		if (neu::g_inputSystem.GetKeyState(neu::key_space) == neu::InputSystem::State::Press) {
 			m_scene->GetActorFromName("Title")->SetActive(false);
 			m_scene->GetActorFromName("Instruction")->SetActive(false);
 			m_scene->GetActorFromName("Begin")->SetActive(false);
@@ -45,44 +47,49 @@ void AlexGame::Update(){
 
 	case gameState::startLevel:
 
-		{
-			auto actor = neu::Factory::Instance().Create<neu::Actor>("Player");
-			actor->m_transform.position = { 400,200 };
-			actor->Initialize();
-			m_scene->Add(std::move(actor));
-		}
+	{
+		auto actor = neu::Factory::Instance().Create<neu::Actor>("Player");
+		actor->m_transform.position = { 400,200 };
+		actor->Initialize();
+		m_scene->Add(std::move(actor));
+	}
 
-		for (int i = 0; i < 10; i++) {
-			auto actor = neu::Factory::Instance().Create<neu::Actor>("Coin");
-			actor->m_transform.position = { neu::randomf(0, 800), 100.0f };
-			actor->Initialize();
-			m_scene->Add(std::move(actor));
-		}
+	m_gameState = gameState::game;
+	break;
 
-		for (int i = 0; i < 3; i++) {
+	case gameState::game:
+
+		m_enemySpawnTimer -= neu::g_time.deltaTime;
+		if (m_enemySpawnTimer <= 0){
 			auto actor = neu::Factory::Instance().Create<neu::Actor>("Ghost");
 			actor->m_transform.position = { neu::randomf(0, 800), 100.0f };
 			actor->Initialize();
 			m_scene->Add(std::move(actor));
+
+			m_enemySpawnTimer = 300;
 		}
 
+		m_coinSpawnTimer -= neu::g_time.deltaTime;
+		if (m_coinSpawnTimer <= 0){
+			auto actor = neu::Factory::Instance().Create<neu::Actor>("Coin");
+			actor->m_transform.position = { neu::randomf(0, 800), 100.0f };
+			actor->Initialize();
+			m_scene->Add(std::move(actor));
 
-		m_gameState = gameState::game;
-		break;
+			m_coinSpawnTimer = 400;
+		}
 
-	case gameState::game:
+	break;
+
+	case gameState::gameOver:
 	{
-		auto actor = m_scene->GetActorFromName("Score");
-		auto component = actor->GetComponent<neu::TextComponent>();
-		component->SetText(std::to_string((int)m_score));
+		
+		m_scene->GetActorFromName("End")->SetActive(true);
+
+
 	}
 
-	{
-		auto actor = m_scene->GetActorFromName("Score");
-		auto component = actor->GetComponent<neu::TextComponent>();
-		component->SetText(std::to_string((int)m_score));
-	}
-		break;
+	break;
 
 	case gameState::playerDead:
 		m_startTimer -= neu::g_time.deltaTime;
@@ -91,16 +98,17 @@ void AlexGame::Update(){
 		}
 		break;
 	}
+
 	m_scene->Update();
 }
 
-void AlexGame::Draw(neu::Renderer& renderer){
+void AlexGame::Draw(neu::Renderer& renderer) {
 
 	m_scene->Draw(renderer);
 
 }
 
-void AlexGame::OnAddPoints(const neu::Event& event){
+void AlexGame::OnAddPoints(const neu::Event& event) {
 
 	AddPoints(std::get<int>(event.data));
 
@@ -109,7 +117,7 @@ void AlexGame::OnAddPoints(const neu::Event& event){
 
 }
 
-void AlexGame::OnPlayerDead(const neu::Event& event){
+void AlexGame::OnPlayerDead(const neu::Event& event) {
 
 	m_gameState = gameState::playerDead;
 	m_lives--;
@@ -117,7 +125,7 @@ void AlexGame::OnPlayerDead(const neu::Event& event){
 
 }
 
-void AlexGame::OnNotify(const neu::Event& event){
+void AlexGame::OnNotify(const neu::Event& event) {
 
 	if (event.name == "EVENT_ENEMY_DEFEAT") {
 		AddPoints(std::get<int>(event.data));
@@ -127,5 +135,20 @@ void AlexGame::OnNotify(const neu::Event& event){
 		m_gameState = gameState::playerDead;
 		m_lives--;
 		m_startTimer = 3;
+	}
+
+	if (event.name == "EVENT_ADD_POINTS") {
+
+		m_scene->GetActorFromName("Score")->SetActive(true);
+
+		AddPoints(std::get<int>(event.data));
+		
+		auto score = m_scene->GetActorFromName("Score");
+		auto component = score->GetComponent<neu::TextComponent>();
+		if (component){
+			component->SetText(std::to_string((int)(GetScore())));
+		}
+		std::cout << GetScore() << std::endl;
+
 	}
 }
